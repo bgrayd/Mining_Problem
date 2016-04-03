@@ -1,6 +1,11 @@
 #include <stdlib.h> 
 #include <queue>
 #include "mining_problem.h"
+#include "locationNode.h"
+
+
+double probAdjYgivenY = defaultProbAdjYgivenY;
+double probAdjYgivenN = defaultProbAdjYgivenN;
 
 
 
@@ -18,7 +23,7 @@ int manhDist(int x1, int y1, int x2, int y2)
 *********************************************/
 int manhDist(Position pos1, Position pos2)
 {
-	manhDist(pos1.x, pos1.y, pos2.x, pos2.y);
+	return manhDist(pos1.x, pos1.y, pos2.x, pos2.y);
 }
 
 /*******************************************
@@ -27,9 +32,9 @@ int manhDist(Position pos1, Position pos2)
 *@param pOfT: where each cell k holds P(T_k), of size [length][width]
 *@return: the value P(d_i)
 *******************************************/
-float calcPOfD(float (*pOfDGivenT)[length][width], float (*pOfT)[length][width])
+double calcPOfD(double (*pOfDGivenT)[length][width], double (*pOfT)[length][width])
 {
-	float runningPOfD = 0;
+	double runningPOfD = 0;
 	
 	for (int i = 0; i < length; i++)
 		for (int j = 0; j < width; j++)
@@ -45,7 +50,7 @@ float calcPOfD(float (*pOfDGivenT)[length][width], float (*pOfT)[length][width])
 *@param pOfT: where each cell k holds P(T_k), of size [length][width]
 *@param pOfD: P(d)
 *******************************************/
-void calcPOfT(float(*pOfDGivenT)[length][width], float(*pOfT)[length][width], float pOfD)
+void calcPOfT(double(*pOfDGivenT)[length][width], double(*pOfT)[length][width], double pOfD)
 {
 	for (int i = 0; i < length; i++)
 		for (int j = 0; j < width; j++)
@@ -58,9 +63,9 @@ void calcPOfT(float(*pOfDGivenT)[length][width], float(*pOfT)[length][width], fl
 *@param pOfDGivenT: where each cell k holds the value P(d_i | T_k), of size [length][width]
 *@param pOfT: where each cell k holds P(T_k), of size [length][width]
 *******************************************/
-void calcPOfT(float(*pOfDGivenT)[length][width], float(*pOfT)[length][width])
+void calcPOfT(double(*pOfDGivenT)[length][width], double(*pOfT)[length][width])
 {
-	float pOfD = calcPOfD(pOfDGivenT, pOfT);
+	double pOfD = calcPOfD(pOfDGivenT, pOfT);
 	calcPOfT(pOfDGivenT, pOfT, pOfD);
 }
 
@@ -69,16 +74,16 @@ void calcPOfT(float(*pOfDGivenT)[length][width], float(*pOfT)[length][width])
 *@param pOfT: where each cell k holds P(T_k), of size [length][width]
 *@param remaining: the remaining number of special cells
 *******************************************/
-void normalize(float (*pOfT)[length][width], int remaining)
+void normalize(double (*pOfT)[length][width], int remaining)
 {
-	float sum = 0;
+	double sum = 0;
 
 	for (int i = 0; i < length; i++)
 		for (int j = 0; j < width; j++)
 			if (((*pOfT)[i][j] != 1.0) && ((*pOfT)[i][j] != 0.0))
 				sum = sum + (*pOfT)[i][j];
 
-	float normValue = remaining / sum;
+	double normValue = remaining / sum;
 
 	for (int i = 0; i < length; i++)
 		for (int j = 0; j < width; j++)
@@ -92,7 +97,7 @@ void normalize(float (*pOfT)[length][width], int remaining)
 *@param posChecked: the position of the new observation
 *@param special: is the newly checked spot a special valued spot
 *******************************************/
-void calcPOfDGivenT(float(*pOfDGivenT)[length][width], Position posChecked, bool special)
+void calcPOfDGivenT(double(*pOfDGivenT)[length][width], Position posChecked, bool special)
 {
 	for (int i = 0; i < length; i++)
 		for (int j = 0; j < width; j++)
@@ -100,7 +105,7 @@ void calcPOfDGivenT(float(*pOfDGivenT)[length][width], Position posChecked, bool
 
 	std::queue<Position> myQueue;
 	Position currentPos, nextPos;
-	float adjProb = (special) ? probAdjYgivenY : probAdjYgivenN;
+	double adjProb = (special) ? probAdjYgivenY : probAdjYgivenN;
 	currentPos = posChecked;
 
 	nextPos.x = currentPos.x - 1;
@@ -133,7 +138,7 @@ void calcPOfDGivenT(float(*pOfDGivenT)[length][width], Position posChecked, bool
 	}
 
 
-	while (!myQueue.empty)
+	while (!myQueue.empty())
 	{
 		currentPos = myQueue.front();
 		myQueue.pop();

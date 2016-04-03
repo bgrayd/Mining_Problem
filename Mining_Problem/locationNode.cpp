@@ -31,22 +31,22 @@ void locationNode::setPosition(Position position)
 	this->position = position;
 }
 
-float locationNode::getProb()
+double locationNode::getProb()
 {
 	return this->prob;
 }
 
-void locationNode::setProb(float prob)
+void locationNode::setProb(double prob)
 {
 	this->prob = prob;
 }
 
-float locationNode::getHeuristicValue()
+double locationNode::getHeuristicValue()
 {
 	return (this->cost)*(this->basicHeurCostScale) + (this->prob) * (this->basicHeurProbScale);
 }
 
-void locationNode::setBasicHeuristic(float costScaler, float probScaler)
+void locationNode::setBasicHeuristic(double costScaler, double probScaler)
 {
 	this->basicHeurCostScale = costScaler;
 	this->basicHeurProbScale = probScaler;

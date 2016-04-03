@@ -12,17 +12,17 @@ public:
 	void setCost(int cost);
 	Position getPosition();
 	void setPosition(Position position);
-	float getProb();
-	void setProb(float prob);
+	double getProb();
+	void setProb(double prob);
 
-	float getHeuristicValue();
-	void setBasicHeuristic(float costScaler, float probScaler);
+	double getHeuristicValue();
+	void setBasicHeuristic(double costScaler, double probScaler);
 
 	Position position;
-	float prob;
+	double prob;
 	int cost;
 
-	float basicHeurCostScale = defaultCostScale;
-	float basicHeurProbScale = defaultProbScale;
+	double basicHeurCostScale = defaultCostScale;
+	double basicHeurProbScale = defaultProbScale;
 };
 
