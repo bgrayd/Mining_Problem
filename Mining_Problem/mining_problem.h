@@ -14,4 +14,6 @@ struct Position
 	int y;
 };
 
+int manhDist(Position pos1, Position pos2);
+
 #endif
