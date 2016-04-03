@@ -12,7 +12,7 @@
 using namespace std;
 
 #define DEFAULTINPUTFILENAME "inputFile.txt"
-#define DEFAULTINPUTFILENAME "outputFile.txt"
+#define DEFAULTOUTPUTFILENAME "outputFile.txt"
 
 
 double probAdjYgivenY = defaultProbAdjYgivenY;
