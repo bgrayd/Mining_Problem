@@ -16,10 +16,10 @@ locationNode::~locationNode()
 {
 }
 
-int locationNode::getCost() 
+/*int locationNode::getCost() 
 {
-	return manhDist(this->position, this->basePosition);
-}
+	return 2*manhDist(this->position, this->basePosition);
+}*/
 
 Position locationNode::getPosition()
 {
@@ -41,10 +41,10 @@ void locationNode::setProb(double prob)
 	this->prob = prob;
 }
 
-double locationNode::getBasicHeuristicValue()
+/*double locationNode::getBasicHeuristicValue()
 {
-	return (this->getCost())*(this->basicHeurCostScale) + (this->prob) * (this->basicHeurProbScale);
-}
+	return 0;// (this->getCost())*(this->basicHeurCostScale) + (this->prob) * (this->basicHeurProbScale);
+}*/
 
 void locationNode::setBasicHeuristic(double costScaler, double probScaler)
 {
@@ -56,10 +56,10 @@ bool locationNode::operator<(locationNode & rhs)
 {
 	return this->getBasicHeuristicValue() < rhs.getBasicHeuristicValue();
 }
-bool operator<(locationNode & lhs, locationNode & rhs)
+/*bool operator<(locationNode & lhs, locationNode & rhs)
 {
 	return lhs.getBasicHeuristicValue() < rhs.getBasicHeuristicValue();
-}
+}*/
 
 bool compareLocNodes(locationNode a, locationNode b)
 {

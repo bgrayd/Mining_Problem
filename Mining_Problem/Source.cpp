@@ -1,7 +1,18 @@
 #include <stdlib.h> 
 #include <queue>
+#include <cstdlib>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cstring>
+#include <stdio.h>
 #include "mining_problem.h"
 #include "locationNode.h"
+
+using namespace std;
+
+#define DEFAULTINPUTFILENAME "inputFile.txt"
+#define DEFAULTOUTPUTFILENAME "outputFile.txt"
 
 
 double probAdjYgivenY = defaultProbAdjYgivenY;
@@ -32,15 +43,15 @@ int manhDist(Position pos1, Position pos2)
 *@param pOfT: where each cell k holds P(T_k), of size [length][width]
 *@return: the value P(d_i)
 *******************************************/
-double calcPOfD(double (*pOfDGivenT)[length][width], double (*pOfT)[length][width])
+double calcPOfD(double(*pOfDGivenT)[length][width], double(*pOfT)[length][width])
 {
 	double runningPOfD = 0;
-	
+
 	for (int i = 0; i < length; i++)
 		for (int j = 0; j < width; j++)
 			if (((*pOfT)[i][j] != 1.0) && ((*pOfT)[i][j] != 0.0))
 				runningPOfD = (*pOfDGivenT)[i][j] * (*pOfT)[i][j];
-	
+
 	return runningPOfD;
 };
 
@@ -74,7 +85,7 @@ void calcPOfT(double(*pOfDGivenT)[length][width], double(*pOfT)[length][width])
 *@param pOfT: where each cell k holds P(T_k), of size [length][width]
 *@param remaining: the remaining number of special cells
 *******************************************/
-void normalize(double (*pOfT)[length][width], int remaining)
+void normalize(double(*pOfT)[length][width], int remaining)
 {
 	double sum = 0;
 
@@ -103,77 +114,77 @@ void calcPOfDGivenT(double(*pOfDGivenT)[length][width], Position posChecked, boo
 		for (int j = 0; j < width; j++)
 			(*pOfDGivenT)[i][j] = 0;
 
-std::queue<Position> myQueue;
-Position currentPos, nextPos;
-double adjProb = (special) ? probAdjYgivenY : probAdjYgivenN;
-currentPos = posChecked;
-
-nextPos.x = currentPos.x - 1;
-nextPos.y = currentPos.y - 1;
-if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width))
-{
-	(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
-	myQueue.push(nextPos);
-}
-nextPos.x = currentPos.x + 1;
-nextPos.y = currentPos.y - 1;
-if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width))
-{
-	(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
-	myQueue.push(nextPos);
-}
-nextPos.x = currentPos.x - 1;
-nextPos.y = currentPos.y + 1;
-if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width))
-{
-	(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
-	myQueue.push(nextPos);
-}
-nextPos.x = currentPos.x + 1;
-nextPos.y = currentPos.y + 1;
-if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width))
-{
-	(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
-	myQueue.push(nextPos);
-}
-
-
-while (!myQueue.empty())
-{
-	currentPos = myQueue.front();
-	myQueue.pop();
-	adjProb = probAdjYgivenY * (*pOfDGivenT)[currentPos.x][currentPos.y];
+	std::queue<Position> myQueue;
+	Position currentPos, nextPos;
+	double adjProb = (special) ? probAdjYgivenY : probAdjYgivenN;
+	currentPos = posChecked;
 
 	nextPos.x = currentPos.x - 1;
-	nextPos.y = currentPos.y - 1;
-	if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width) && (manhDist(nextPos, posChecked) > manhDist(currentPos, posChecked)))
+	nextPos.y = currentPos.y;
+	if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width))
 	{
 		(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
 		myQueue.push(nextPos);
 	}
 	nextPos.x = currentPos.x + 1;
+	nextPos.y = currentPos.y;
+	if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width))
+	{
+		(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
+		myQueue.push(nextPos);
+	}
+	nextPos.x = currentPos.x;
 	nextPos.y = currentPos.y - 1;
-	if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width) && (manhDist(nextPos, posChecked) > manhDist(currentPos, posChecked)))
+	if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width))
 	{
 		(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
 		myQueue.push(nextPos);
 	}
-	nextPos.x = currentPos.x - 1;
+	nextPos.x = currentPos.x;
 	nextPos.y = currentPos.y + 1;
-	if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width) && (manhDist(nextPos, posChecked) > manhDist(currentPos, posChecked)))
-	{
-		(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
-		myQueue.push(nextPos);
-	}
-	nextPos.x = currentPos.x + 1;
-	nextPos.y = currentPos.y + 1;
-	if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width) && (manhDist(nextPos, posChecked) > manhDist(currentPos, posChecked)))
+	if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width))
 	{
 		(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
 		myQueue.push(nextPos);
 	}
 
-}
+
+	while (!myQueue.empty())
+	{
+		currentPos = myQueue.front();
+		myQueue.pop();
+		adjProb = probAdjYgivenY * (*pOfDGivenT)[currentPos.x][currentPos.y];
+
+		nextPos.x = currentPos.x - 1;
+		nextPos.y = currentPos.y;
+		if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width) && (manhDist(nextPos, posChecked) > manhDist(currentPos, posChecked)))
+		{
+			(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
+			myQueue.push(nextPos);
+		}
+		nextPos.x = currentPos.x + 1;
+		nextPos.y = currentPos.y;
+		if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width) && (manhDist(nextPos, posChecked) > manhDist(currentPos, posChecked)))
+		{
+			(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
+			myQueue.push(nextPos);
+		}
+		nextPos.x = currentPos.x;
+		nextPos.y = currentPos.y - 1;
+		if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width) && (manhDist(nextPos, posChecked) > manhDist(currentPos, posChecked)))
+		{
+			(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
+			myQueue.push(nextPos);
+		}
+		nextPos.x = currentPos.x;
+		nextPos.y = currentPos.y + 1;
+		if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width) && (manhDist(nextPos, posChecked) > manhDist(currentPos, posChecked)))
+		{
+			(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
+			myQueue.push(nextPos);
+		}
+
+	}
 
 
 }
@@ -187,7 +198,7 @@ while (!myQueue.empty())
 *******************************************/
 void updatePOfT(double(*pOfT)[length][width], Position posChecked, bool special, int remaining)
 {
-
+	(*pOfT)[posChecked.x][posChecked.y] = (special) ? 1.0 : 0.0;
 
 	double pOfDGivenT[length][width];
 	calcPOfDGivenT(&pOfDGivenT, posChecked, special);
@@ -197,16 +208,19 @@ void updatePOfT(double(*pOfT)[length][width], Position posChecked, bool special,
 	calcPOfT(&pOfDGivenT, pOfT, pOfD);
 
 	normalize(pOfT, remaining);
+
+	(*pOfT)[posChecked.x][posChecked.y] = (special) ? 1.0 : 0.0;
+
 }
 
 int run(bool(*answers)[length][width], int numSpecial) {
 	double pOfT[length][width];
 	for (int i = 0; i < length; i++) {
-		for (int j = 0; j < width; j++){
-			pOfT[i][j] = numSpecial/(length*width); //normalize
+		for (int j = 0; j < width; j++) {
+			pOfT[i][j] = numSpecial / (length*width); //normalize
 		}
 	}
-	
+
 	int currentGas = startingGas;
 	int currentNumSpecial = numSpecial;
 	int currentReward = 0;
@@ -248,6 +262,33 @@ int run(bool(*answers)[length][width], int numSpecial) {
 	return currentReward;
 }
 
-int main(void) {
+int main(int argc, char** argv) {
+	fstream inFile, outFile;
+	char c;
+	string currentLine, toBeWritten;
+
+	if (argc == 3)
+	{
+		inFile.open(argv[1], ios::in | ios::app);
+		outFile.open(argv[2], ios::out | ios::app);
+	}
+	else
+	{
+		inFile.open(DEFAULTINPUTFILENAME, ios::in | ios::app);
+		outFile.open(DEFAULTINPUTFILENAME, ios::out | ios::app);
+
+	}
+
+	while (true)
+	{
+		c = inFile.peek();
+		if (c == EOF)
+			break;
+		getline(inFile, currentLine);
+	}
+	outFile.write(toBeWritten.c_str(), toBeWritten.size());
+	inFile.close();
+	outFile.close();
 	return 0;
 }
+

@@ -2,8 +2,8 @@
 #ifndef miningProblem_h_
 #define miningProblem_h_
 
-#define length 5
-#define width 5
+#define length 8
+#define width 8
 #define startingGas 500
 #define baseReward 50
 #define addedReward 20
