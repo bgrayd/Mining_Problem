@@ -103,77 +103,77 @@ void calcPOfDGivenT(double(*pOfDGivenT)[length][width], Position posChecked, boo
 		for (int j = 0; j < width; j++)
 			(*pOfDGivenT)[i][j] = 0;
 
-std::queue<Position> myQueue;
-Position currentPos, nextPos;
-double adjProb = (special) ? probAdjYgivenY : probAdjYgivenN;
-currentPos = posChecked;
-
-nextPos.x = currentPos.x - 1;
-nextPos.y = currentPos.y - 1;
-if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width))
-{
-	(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
-	myQueue.push(nextPos);
-}
-nextPos.x = currentPos.x + 1;
-nextPos.y = currentPos.y - 1;
-if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width))
-{
-	(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
-	myQueue.push(nextPos);
-}
-nextPos.x = currentPos.x - 1;
-nextPos.y = currentPos.y + 1;
-if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width))
-{
-	(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
-	myQueue.push(nextPos);
-}
-nextPos.x = currentPos.x + 1;
-nextPos.y = currentPos.y + 1;
-if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width))
-{
-	(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
-	myQueue.push(nextPos);
-}
-
-
-while (!myQueue.empty())
-{
-	currentPos = myQueue.front();
-	myQueue.pop();
-	adjProb = probAdjYgivenY * (*pOfDGivenT)[currentPos.x][currentPos.y];
+	std::queue<Position> myQueue;
+	Position currentPos, nextPos;
+	double adjProb = (special) ? probAdjYgivenY : probAdjYgivenN;
+	currentPos = posChecked;
 
 	nextPos.x = currentPos.x - 1;
-	nextPos.y = currentPos.y - 1;
-	if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width) && (manhDist(nextPos, posChecked) > manhDist(currentPos, posChecked)))
+	nextPos.y = currentPos.y;
+	if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width))
 	{
 		(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
 		myQueue.push(nextPos);
 	}
 	nextPos.x = currentPos.x + 1;
+	nextPos.y = currentPos.y;
+	if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width))
+	{
+		(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
+		myQueue.push(nextPos);
+	}
+	nextPos.x = currentPos.x;
 	nextPos.y = currentPos.y - 1;
-	if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width) && (manhDist(nextPos, posChecked) > manhDist(currentPos, posChecked)))
+	if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width))
 	{
 		(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
 		myQueue.push(nextPos);
 	}
-	nextPos.x = currentPos.x - 1;
+	nextPos.x = currentPos.x;
 	nextPos.y = currentPos.y + 1;
-	if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width) && (manhDist(nextPos, posChecked) > manhDist(currentPos, posChecked)))
-	{
-		(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
-		myQueue.push(nextPos);
-	}
-	nextPos.x = currentPos.x + 1;
-	nextPos.y = currentPos.y + 1;
-	if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width) && (manhDist(nextPos, posChecked) > manhDist(currentPos, posChecked)))
+	if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width))
 	{
 		(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
 		myQueue.push(nextPos);
 	}
 
-}
+
+	while (!myQueue.empty())
+	{
+		currentPos = myQueue.front();
+		myQueue.pop();
+		adjProb = probAdjYgivenY * (*pOfDGivenT)[currentPos.x][currentPos.y];
+
+		nextPos.x = currentPos.x - 1;
+		nextPos.y = currentPos.y;
+		if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width) && (manhDist(nextPos, posChecked) > manhDist(currentPos, posChecked)))
+		{
+			(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
+			myQueue.push(nextPos);
+		}
+		nextPos.x = currentPos.x + 1;
+		nextPos.y = currentPos.y;
+		if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width) && (manhDist(nextPos, posChecked) > manhDist(currentPos, posChecked)))
+		{
+			(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
+			myQueue.push(nextPos);
+		}
+		nextPos.x = currentPos.x;
+		nextPos.y = currentPos.y - 1;
+		if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width) && (manhDist(nextPos, posChecked) > manhDist(currentPos, posChecked)))
+		{
+			(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
+			myQueue.push(nextPos);
+		}
+		nextPos.x = currentPos.x;
+		nextPos.y = currentPos.y + 1;
+		if ((nextPos.x >= 0) && (nextPos.y >= 0) && (nextPos.x < length) && (nextPos.y < width) && (manhDist(nextPos, posChecked) > manhDist(currentPos, posChecked)))
+		{
+			(*pOfDGivenT)[nextPos.x][nextPos.y] = (*pOfDGivenT)[nextPos.x][nextPos.y] + adjProb;
+			myQueue.push(nextPos);
+		}
+
+	}
 
 
 }

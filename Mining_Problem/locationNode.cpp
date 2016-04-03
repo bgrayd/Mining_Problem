@@ -18,7 +18,7 @@ locationNode::~locationNode()
 
 int locationNode::getCost() 
 {
-	return manhDist(this->position, this->basePosition);
+	return 2*manhDist(this->position, this->basePosition);
 }
 
 Position locationNode::getPosition()
