@@ -179,6 +179,27 @@ void calcPOfDGivenT(double(*pOfDGivenT)[length][width], Position posChecked, boo
 }
 
 
+/*******************************************
+*calcPOfD calculates the P(T_j)^1 = P(T_j | d_i), does the calculation in place
+*@param pOfDGivenT: where each cell k holds the value P(d_i | T_k), of size [length][width]
+*@param pOfT: where each cell k holds P(T_k), of size [length][width]
+*@param pOfD: P(d)
+*******************************************/
+void updatePOfT(double(*pOfT)[length][width], Position posChecked, bool special, int remaining)
+{
+	
+
+	double pOfDGivenT[length][width];
+	calcPOfDGivenT(&pOfDGivenT, posChecked, special);
+	
+	double pOfD = calcPOfD(&pOfDGivenT, pOfT);
+
+	calcPOfT(&pOfDGivenT, pOfT, pOfD);
+
+	normalize(pOfT, remaining);
+}
+
+
 
 int main(void) {
 	return 0;
