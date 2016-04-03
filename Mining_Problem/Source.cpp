@@ -207,12 +207,45 @@ int run(bool(*answers)[length][width], int numSpecial) {
 		}
 	}
 	
-	std::priority_queue<locationNode, std::vector<locationNode>, std::less<locationNode>> p_queue;
-	for (int i = 0; i < length; i++) {
-		for (int j = 0; j < width; j++) {
-			p_queue.push(locationNode(i, j, pOfT[i][j]));
+	int currentGas = startingGas;
+	int currentNumSpecial = numSpecial;
+	int currentReward = 0;
+	bool visitedNodes[length][width];
+	while (1) {
+		// Init the queue
+		std::priority_queue<locationNode, std::vector<locationNode>, std::less<locationNode>> prioQueue;
+
+		// Calculate gas costs
+		for (int i = 0; i < length; i++) {
+			for (int j = 0; j < width; j++) {
+				locationNode ln = locationNode(i, j, pOfT[i][j]);
+				if (currentGas > ln.getCost() && !visitedNodes[i][j]) {
+					prioQueue.push(ln);
+				}
+			}
 		}
+		// Check to see if we have gas to get anywhere
+		if (prioQueue.empty()) {
+			break;
+		}
+
+		// Calculate new gas and reward
+		locationNode chosenOption = prioQueue.top();
+		visitedNodes[chosenOption.position.x][chosenOption.position.y] = true;
+		currentGas = currentGas - chosenOption.getCost();
+		if ((*answers)[chosenOption.position.x][chosenOption.position.y] == true) {
+			currentReward = currentReward + baseReward + addedReward;
+			currentNumSpecial = currentNumSpecial - 1;
+		}
+		else {
+			currentReward = currentReward + baseReward;
+		}
+
+		//Update probibilities
+		updatePOfT(&pOfT, chosenOption.position, (*answers)[chosenOption.position.x][chosenOption.position.y], currentNumSpecial);
 	}
+
+	return currentReward;
 }
 
 int main(void) {
