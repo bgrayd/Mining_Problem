@@ -52,9 +52,13 @@ void locationNode::setBasicHeuristic(double costScaler, double probScaler)
 	this->basicHeurProbScale = probScaler;
 }
 
-bool locationNode::operator<(const locationNode & lhs, const locationNode & rhs)
+bool locationNode::operator<(locationNode & rhs)
 {
-	return lhs.getBasicHeuristicValue() < rhs.getBasicHeuristicValue();;
+	return this->getBasicHeuristicValue() < rhs.getBasicHeuristicValue();
+}
+bool operator<(locationNode & lhs, locationNode & rhs)
+{
+	return lhs.getBasicHeuristicValue() < rhs.getBasicHeuristicValue();
 }
 
 bool compareLocNodes(locationNode a, locationNode b)
