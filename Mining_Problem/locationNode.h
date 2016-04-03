@@ -16,6 +16,7 @@ public:
 
 	double getBasicHeuristicValue();
 	void setBasicHeuristic(double costScaler, double probScaler);
+	bool operator< (const locationNode& lhs, const locationNode& rhs);
 
 	Position position;
 	double prob;
