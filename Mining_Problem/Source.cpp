@@ -207,7 +207,7 @@ int run(bool(*answers)[length][width], int numSpecial) {
 		}
 	}
 	
-	std::priority_queue<locationNode> p_queue;
+	std::priority_queue<locationNode, std::vector<locationNode>, std::less<locationNode>> p_queue;
 	for (int i = 0; i < length; i++) {
 		for (int j = 0; j < width; j++) {
 			p_queue.push(locationNode(i, j, pOfT[i][j]));
