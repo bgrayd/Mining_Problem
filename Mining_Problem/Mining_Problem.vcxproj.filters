@@ -34,5 +34,13 @@
     <Text Include="input.txt">
       <Filter>Source Files</Filter>
     </Text>
+    <Text Include="original_input.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="map_generator.py">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
