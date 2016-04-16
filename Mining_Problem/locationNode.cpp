@@ -1,5 +1,10 @@
 #include "locationNode.h"
 
+double locationNode::basicHeurCostScale = defaultCostScale;
+double locationNode::basicHeurProbScale = defaultProbScale;
+double locationNode::advHeur1lvlScale = default1lvlScale;
+double locationNode::advHeur2lvlScale = default2lvlScale;
+double locationNode::advHeur3lvlScale = default3lvlScale;
 
 
 locationNode::locationNode(int x, int y, double prob)
