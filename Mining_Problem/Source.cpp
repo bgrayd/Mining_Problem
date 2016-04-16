@@ -267,21 +267,12 @@ int run(bool(*answers)[length][width], int numSpecial) {
 }
 
 int main(int argc, char** argv) {
-	fstream inFile, outFile;
+	fstream inFile;
 	char c;
 	string currentLine, toBeWritten;
 
-	if (argc == 3)
-	{
-		inFile.open(argv[1], ios::in | ios::app);
-		outFile.open(argv[2], ios::out | ios::app);
-	}
-	else
-	{
-		inFile.open(DEFAULTINPUTFILENAME, ios::in | ios::app);
-		outFile.open(DEFAULTINPUTFILENAME, ios::out | ios::app);
+	inFile.open(DEFAULTINPUTFILENAME, ios::in | ios::app);
 
-	}
 
 	while (true)
 	{
@@ -303,11 +294,9 @@ int main(int argc, char** argv) {
 
 
 
-		cout << run(&answers, numSpecial) << endl;
+		cout << run(&answers, numSpecial)<< "~" << endl;
 	}
-	outFile.write(toBeWritten.c_str(), toBeWritten.size());
 	inFile.close();
-	outFile.close();
 	return 0;
 }
 
