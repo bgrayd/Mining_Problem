@@ -216,3 +216,5 @@ ModelManifest.xml
 *.opendb
 /Mining_Problem.VC.db
 /Mining_Problem.VC.VC.opendb
+/Mining_Problem.vcxproj.filters
+/Mining_Problem.vcxproj
