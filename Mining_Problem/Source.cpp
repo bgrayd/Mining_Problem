@@ -11,7 +11,7 @@
 
 using namespace std;
 
-#define DEFAULTINPUTFILENAME "inputFile.txt"
+#define DEFAULTINPUTFILENAME "input.txt"
 #define DEFAULTOUTPUTFILENAME "outputFile.txt"
 
 
@@ -225,6 +225,10 @@ int run(bool(*answers)[length][width], int numSpecial) {
 	int currentNumSpecial = numSpecial;
 	int currentReward = 0;
 	bool visitedNodes[length][width];
+	for (int i = 0; i < length; i++)
+		for (int j = 0; j < width; j++)
+			visitedNodes[i][j] = false;
+
 	while (1) {
 		// Init the queue
 		std::priority_queue<locationNode, std::vector<locationNode>, std::less<locationNode>> prioQueue;
@@ -284,7 +288,22 @@ int main(int argc, char** argv) {
 		c = inFile.peek();
 		if (c == EOF)
 			break;
-		getline(inFile, currentLine);
+
+		bool answers[length][width];
+		int numSpecial = 0;
+
+		for (int i = 0; i < 8; i++) {
+			getline(inFile, currentLine);
+			for (int j = 0; j < 8; j++)
+			{
+				answers[i][j] = (currentLine[j] == '1') ? true : false;
+				numSpecial += (currentLine[j] == '1') ? 1 : 0;
+			}
+		}
+
+
+
+		cout << run(&answers, numSpecial) << endl;
 	}
 	outFile.write(toBeWritten.c_str(), toBeWritten.size());
 	inFile.close();

@@ -2,7 +2,7 @@
 #include "mining_problem.h"
 
 #define defaultCostScale -1
-#define defaultProbScale 10
+#define defaultProbScale 0
 class locationNode
 {
 public:

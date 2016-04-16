@@ -4,7 +4,7 @@
 
 #define length 8
 #define width 8
-#define startingGas 500
+#define startingGas 200
 #define baseReward 50
 #define addedReward 20
 
