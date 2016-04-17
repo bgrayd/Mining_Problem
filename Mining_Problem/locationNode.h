@@ -60,7 +60,6 @@ public:
 	}
 	double locationNode::getAdvancedHeuristicValue() const
 	{
-		int num1lvl, num2lvl, num3lvl;
 		double runningValue = this->getBasicHeuristicValue();
 		int LutPos = this->position.x + (this->position.y*width);
 

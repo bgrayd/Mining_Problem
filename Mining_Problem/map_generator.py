@@ -11,7 +11,9 @@ prob = [0.9, 0.1]
 
 map_file = open('input.txt', 'w')
 
-for l in xrange(100):
+count = 0
+#for l in xrange(100):
+while count < 100:
     map = {}
     
     for i in xrange(8): #row
@@ -53,7 +55,14 @@ for l in xrange(100):
                         pass
                 prob = [0.9, 0.1]
     
-    print map
+    tally = 0
+    for i in xrange(8): #row
+        for j in xrange(8): #column
+            tally += map[str(i),str(j)]
+    if (tally < 6) or (tally > 10):
+        continue
+    print(map)
+    count+=1
     
     # export map
     for i in xrange(8): #row
@@ -62,3 +71,4 @@ for l in xrange(100):
         map_file.write('\n')
     
     map_file.write("\n")
+map_file.close()

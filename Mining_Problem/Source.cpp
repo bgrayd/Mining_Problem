@@ -294,17 +294,18 @@ int main(int argc, char** argv) {
 
 	inFile.open(DEFAULTINPUTFILENAME, ios::in | ios::app);
 
-
+	int count = 0;
 	while (true)
 	{
 		c = inFile.peek();
 		if (c == EOF)
 			break;
-
+		count++;
 		bool answers[length][width];
 		int numSpecial = 0;
 
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 8; i++)
+		{
 			getline(inFile, currentLine);
 			for (int j = 0; j < 8; j++)
 			{
@@ -312,7 +313,9 @@ int main(int argc, char** argv) {
 				numSpecial += (currentLine[j] == '1') ? 1 : 0;
 			}
 		}
-
+		c = inFile.peek();
+		if (c != EOF)
+			getline(inFile, currentLine);
 
 
 		cout << run(&answers, numSpecial)<< "~" << endl;
