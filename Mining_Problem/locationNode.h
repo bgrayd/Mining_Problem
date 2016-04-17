@@ -1,11 +1,11 @@
 #pragma once
 #include "mining_problem.h"
 
-#define defaultCostScale   -1
-#define defaultProbScale	0
-#define default1lvlScale	1
+#define defaultCostScale   -3
+#define defaultProbScale	5
+#define default1lvlScale	3
 #define default2lvlScale	2
-#define default3lvlScale	3
+#define default3lvlScale	1
 
 
 class locationNode
@@ -72,7 +72,7 @@ public:
 	void setBasicHeuristic(double costScaler, double probScaler);
 	bool operator<(locationNode & rhs);
 	friend bool operator<(const locationNode& lhs, const locationNode& rhs) {
-		return lhs.getBasicHeuristicValue() < rhs.getBasicHeuristicValue();
+		return lhs.getAdvancedHeuristicValue() < rhs.getAdvancedHeuristicValue();
 	};
 
 	Position position;

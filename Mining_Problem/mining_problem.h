@@ -5,11 +5,11 @@
 #define length 8
 #define width 8
 #define startingGas 200
-#define baseReward 50
-#define addedReward 20
+#define baseReward 1000
+#define addedReward 1
 
-#define defaultProbAdjYgivenY 0.1
-#define defaultProbAdjYgivenN 0.05
+#define defaultProbAdjYgivenY 0.34782
+#define defaultProbAdjYgivenN 0.11236
 
 struct Position
 {
