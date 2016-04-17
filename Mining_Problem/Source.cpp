@@ -271,6 +271,27 @@ int main(int argc, char** argv) {
 	char c;
 	string currentLine, toBeWritten;
 
+	if (argc == 3)
+	{
+		/*sscanf_s(argv[1], "%lf", &locationNode::basicHeurCostScale);
+		sscanf_s(argv[2], "%lf", &locationNode::basicHeurProbScale);*/
+		locationNode::basicHeurCostScale = atof(argv[1]);
+		locationNode::basicHeurProbScale = atof(argv[2]);
+	}
+	else if(argc == 6)// argc == 6
+	{
+		/*sscanf_s(argv[1], "%lf", &locationNode::basicHeurCostScale);
+		sscanf_s(argv[2], "%lf", &locationNode::basicHeurProbScale);
+		sscanf_s(argv[3], "%lf", &locationNode::advHeur1lvlScale);
+		sscanf_s(argv[4], "%lf", &locationNode::advHeur2lvlScale);
+		sscanf_s(argv[5], "%lf", &locationNode::advHeur3lvlScale);*/
+		locationNode::basicHeurCostScale = atof(argv[1]);
+		locationNode::basicHeurProbScale = atof(argv[2]);
+		locationNode::advHeur1lvlScale = atof(argv[3]);
+		locationNode::advHeur2lvlScale = atof(argv[4]);
+		locationNode::advHeur3lvlScale = atof(argv[5]);
+	}
+
 	inFile.open(DEFAULTINPUTFILENAME, ios::in | ios::app);
 
 
