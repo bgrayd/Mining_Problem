@@ -318,7 +318,7 @@ int main(int argc, char** argv) {
 			getline(inFile, currentLine);
 
 
-		cout << run(&answers, numSpecial)<< "~" << endl;
+		cout << run(&answers, numSpecial)<< "~";
 	}
 	inFile.close();
 	return 0;
