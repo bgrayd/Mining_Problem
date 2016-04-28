@@ -13,7 +13,7 @@ map_file = open('input.txt', 'w')
 
 count = 0
 #for l in xrange(100):
-while count < 100:
+while count < 500:
     map = {}
     
     for i in xrange(8): #row

@@ -1,11 +1,11 @@
 #pragma once
 #include "mining_problem.h"
 
-#define defaultCostScale   -3
-#define defaultProbScale	5
-#define default1lvlScale	3
-#define default2lvlScale	2
-#define default3lvlScale	1
+#define defaultCostScale    0
+#define defaultProbScale	0
+#define default1lvlScale	0
+#define default2lvlScale	0
+#define default3lvlScale	0
 
 
 class locationNode
@@ -69,6 +69,19 @@ public:
 
 		return runningValue;
 	}
+	/*{
+		double runningValue = (this->prob) * (this->basicHeurProbScale);
+		int LutPos = this->position.x + (this->position.y*width);
+
+		runningValue = runningValue + (advHeur1lvlScale*LUT1lvl[LutPos]);
+		runningValue = runningValue + (advHeur2lvlScale*LUT2lvl[LutPos]);
+		runningValue = runningValue + (advHeur3lvlScale*LUT3lvl[LutPos]);
+
+		runningValue = runningValue / ((this->getCost())*(this->basicHeurCostScale))
+
+		return runningValue;
+	}*/
+
 	void setBasicHeuristic(double costScaler, double probScaler);
 	bool operator<(locationNode & rhs);
 	friend bool operator<(const locationNode& lhs, const locationNode& rhs) {
