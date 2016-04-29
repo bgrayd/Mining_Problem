@@ -1,11 +1,11 @@
 #pragma once
 #include "mining_problem.h"
 
-#define defaultCostScale    0
-#define defaultProbScale	0
-#define default1lvlScale	0
-#define default2lvlScale	0
-#define default3lvlScale	0
+#define defaultCostScale    0.0
+#define defaultProbScale	0.0
+#define default1lvlScale	0.0
+#define default2lvlScale	0.0
+#define default3lvlScale	0.0
 
 
 class locationNode
@@ -59,7 +59,7 @@ public:
 		return (this->getCost())*(this->basicHeurCostScale) + (this->prob) * (this->basicHeurProbScale);
 	}
 	double locationNode::getAdvancedHeuristicValue() const
-	{
+	/*{
 		double runningValue = this->getBasicHeuristicValue();
 		int LutPos = this->position.x + (this->position.y*width);
 
@@ -68,19 +68,19 @@ public:
 		runningValue = runningValue + (advHeur3lvlScale*LUT3lvl[LutPos]);
 
 		return runningValue;
-	}
-	/*{
-		double runningValue = (this->prob) * (this->basicHeurProbScale);
+	}*/
+	{
+		double runningValue = (this->prob) * (basicHeurProbScale);
 		int LutPos = this->position.x + (this->position.y*width);
 
 		runningValue = runningValue + (advHeur1lvlScale*LUT1lvl[LutPos]);
 		runningValue = runningValue + (advHeur2lvlScale*LUT2lvl[LutPos]);
 		runningValue = runningValue + (advHeur3lvlScale*LUT3lvl[LutPos]);
 
-		runningValue = runningValue / ((this->getCost())*(this->basicHeurCostScale))
+		runningValue = runningValue / ((this->getCost())*(basicHeurCostScale));
 
 		return runningValue;
-	}*/
+	}
 
 	void setBasicHeuristic(double costScaler, double probScaler);
 	bool operator<(locationNode & rhs);

@@ -3,8 +3,8 @@ from Queue import PriorityQueue
 
 
 k = 6
-iterationsPerType = 100
-MaxAmountToChange = 2
+iterationsPerType = 5
+MaxAmountToChange = 0.5
 zeroMaxAmount = 10
 ThreadsToRunAtOnce = 3
 totalOuterIterations = 500
@@ -35,6 +35,8 @@ class weight():
         self.d = d
         self.e = e
         self.value = value
+        self.r = 0
+        self.s = 0
         
     def varsToChage(self):
         return ['a','b','c','d','e']
@@ -57,21 +59,28 @@ class searchThread():
             originalValue = getattr(currentWeight, currentVar)
             adjustBy = random.randint(0,100)/100.0 * MaxAmountToChange
             if originalValue == 0:
-                valuesToTry.append(adjustBy*100)
-                valuesToTry.append(-adjustBy*100)
+                valuesToTry.append(adjustBy * zeroMaxAmount)
+                valuesToTry.append(-adjustBy * zeroMaxAmount)
             else:
                 valuesToTry.append(originalValue + originalValue*adjustBy)
                 valuesToTry.append(originalValue - originalValue*adjustBy)
-                #valuesToTry.append(-(originalValue + originalValue*adjustBy))
-                #valuesToTry.append(-(originalValue - originalValue*adjustBy))
+                valuesToTry.append(-(originalValue + originalValue*adjustBy))
+                valuesToTry.append(-(originalValue - originalValue*adjustBy))
 
             for currValue in valuesToTry:
                 currentWeight.__dict__[currentVar] = currValue
-
+                if currentWeight.a == 0:
+                    currentWeight.a = 0.0000000000000000000000000001
                 p=subprocess.Popen(["..\Release\Mining_Problem.exe",str(currentWeight.a),str(currentWeight.b),str(currentWeight.c),str(currentWeight.d),str(currentWeight.e)], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
                 r,s = parseOut(p.stdout.readline())
                 
-                self.pq.put(((90000 - s), copy.deepcopy(currentWeight)))
+                valueBeingMaxed = r + 2 * s
+                
+                thisWeight = copy.deepcopy(currentWeight)
+                thisWeight.r = r
+                thisWeight.s = s
+                thisWeight.value = 90000 - valueBeingMaxed
+                self.pq.put(((90000 - valueBeingMaxed), copy.deepcopy(thisWeight)))
 
             print str(self.iD) + " finished variable "+str(currentVar)
         print str(self.iD) + " finished a beam"
@@ -86,11 +95,11 @@ pq = PriorityQueue()
 for each in range(k - 1):
     a = random.uniform(-20, 20)
     b = random.uniform(-20, 20) * 64
-    c = random.uniform(-2, 2)
-    d = random.uniform(-2, 2)
-    e = random.uniform(-2, 2)
-    #pq.put((90000, weight(90000, a,b,c,d,e)))
-    pq.put((90000, weight(90000, -1,10000,1,0.5,0.25)))
+    c = random.uniform(-20, 20)
+    d = random.uniform(-20, 20)
+    e = random.uniform(-20, 20)
+    pq.put((90000, weight(90000, a,b,c,d,e)))
+    #pq.put((90000, weight(90000, -1,10000,1,0.5,0.25)))
     
 # a = random.uniform(0, 200)
 # b = random.uniform(0, 200)
@@ -104,7 +113,7 @@ for each in range(k - 1):
 # c = random.uniform(-200, 0)
 # d = random.uniform(-200, 0)
 # e = random.uniform(-200, 0)
-pq.put((90000, weight(90000, -1,10000,1,0.5,0.25)))
+pq.put((90000, weight(90000, 1, 10000, 0, 0, 0)))
     
 #pq.put((90000, weight(90000, 1,10,10,10,10)))
 #pq.put((90000, weight(90000,-1,100,10,10,10)))
@@ -127,11 +136,11 @@ for each in range(iterationsPerType):
           
    if(not allSame):
        for i in range(1, k):
-           a = random.uniform(-100, 100)
-           b = random.uniform(-100, 100)* 64
-           c = random.uniform(-100, 100)
-           d = random.uniform(-100, 100)
-           e = random.uniform(-100, 100)
+           a = random.uniform(-1, 100)
+           b = random.uniform(-1, 100)* 64
+           c = random.uniform(-1, 100)
+           d = random.uniform(-1, 100)
+           e = random.uniform(-1, 100)
            beams[i] = (90000, weight(90000, a,b,c,d,e))
    else:
        a = random.uniform(-40, 40)
@@ -155,6 +164,6 @@ for each in range(iterationsPerType):
 
 for each in range(k):
     value,nextWeight = pq.get()
-    print "Special found:"+str(90000-value)
+    print "Special found:"+str(nextWeight.s)+"   out of:"+str(nextWeight.r)
     print("a:"+str(nextWeight.a)+"  b:"+str( nextWeight.b)+"   c:" + str(nextWeight.c)+"   d:"+str( nextWeight.d) + "   e:"+str( nextWeight.e))
     print("\t")

@@ -217,7 +217,7 @@ int run(bool(*answers)[length][width], int numSpecial) {
 	double pOfT[length][width];
 	for (int i = 0; i < length; i++) {
 		for (int j = 0; j < width; j++) {
-			pOfT[i][j] = numSpecial / (length*width); //normalize
+			pOfT[i][j] = (numSpecial * 1.0) / (length*width*1.0); //normalize
 		}
 	}
 
