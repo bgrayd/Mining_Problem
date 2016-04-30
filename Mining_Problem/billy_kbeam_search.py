@@ -3,7 +3,7 @@ from Queue import PriorityQueue
 
 
 k = 6
-iterationsPerType = 5
+iterationsPerType = 100
 MaxAmountToChange = 0.5
 zeroMaxAmount = 10
 ThreadsToRunAtOnce = 3
@@ -74,7 +74,7 @@ class searchThread():
                 p=subprocess.Popen(["..\Release\Mining_Problem.exe",str(currentWeight.a),str(currentWeight.b),str(currentWeight.c),str(currentWeight.d),str(currentWeight.e)], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
                 r,s = parseOut(p.stdout.readline())
                 
-                valueBeingMaxed = r + 2 * s
+                valueBeingMaxed = r + 10 * s
                 
                 thisWeight = copy.deepcopy(currentWeight)
                 thisWeight.r = r
@@ -92,7 +92,7 @@ pq = PriorityQueue()
 #baseBeamThread.start()
 #baseBeamThread.join()
 
-for each in range(k - 1):
+for each in range(k - 2):
     a = random.uniform(-20, 20)
     b = random.uniform(-20, 20) * 64
     c = random.uniform(-20, 20)
@@ -113,7 +113,8 @@ for each in range(k - 1):
 # c = random.uniform(-200, 0)
 # d = random.uniform(-200, 0)
 # e = random.uniform(-200, 0)
-pq.put((90000, weight(90000, 1, 10000, 0, 0, 0)))
+pq.put((90000, weight(90000, 1, 0, 0, 0, 0)))
+pq.put((90000, weight(90000, -1, 1000, 0, 0, 0)))
     
 #pq.put((90000, weight(90000, 1,10,10,10,10)))
 #pq.put((90000, weight(90000,-1,100,10,10,10)))

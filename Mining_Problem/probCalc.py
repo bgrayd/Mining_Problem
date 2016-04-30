@@ -10,7 +10,7 @@ totalNgY = 0.0
 totalYgN = 0.0
 totalNgN = 0.0
 
-for each in range(0,500):
+for each in range(0,1000):
 	YgY = 0.0
 	NgY = 0.0
 	YgN = 0.0

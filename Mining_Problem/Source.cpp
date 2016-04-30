@@ -313,6 +313,12 @@ int main(int argc, char** argv) {
 				numSpecial += (currentLine[j] == '1') ? 1 : 0;
 			}
 		}
+
+		getline(inFile, currentLine);
+		probAdjYgivenY = atof(currentLine.c_str());
+		getline(inFile, currentLine);
+		probAdjYgivenN = atof(currentLine.c_str());
+
 		c = inFile.peek();
 		if (c != EOF)
 			getline(inFile, currentLine);
