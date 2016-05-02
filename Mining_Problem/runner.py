@@ -19,8 +19,8 @@ def parseOut(output):
 		special += int(value%1000)
 	return runs, special
 
-As = [-1, -0.5, -0.001,0.01, 0.1, 1]#[each/10.0 for each in range(-10,1)]
-Bs = [10, -2, -1, 0, 50, 100, 1000]#[each*10 for each in range(0,11)]
+As = [each/10.0 for each in range(-10,1)]
+Bs = [each*100 for each in range(-10,1)]
 
 #As.append(0.5)
 #As.append(1)
@@ -33,13 +33,6 @@ out3 = open("special_avg.csv","w")
 out1.write(",")
 out2.write(",")
 out3.write(",")
-for each in As:
-	out1.write(str(each)+',')
-	out2.write(str(each)+',')
-	out3.write(str(each)+',')
-out1.write("\n")
-out2.write("\n")
-out3.write("\n")
 special = {}
 total = {}
 
@@ -51,10 +44,13 @@ for a in As:
 		total[(a,b)] = r
 		print("a:"+str(a) +"  b:"+str(b)+"  r:"+str(r)+"   s:"+str(s))
 		
-for b in Bs:
-	out1.write(str(b)+',')
-	out2.write(str(b)+',')
-	out3.write(str(b)+',')
+for i in range(0,11):
+	out1.write(str(Bs[i])+',')
+	out2.write(str(Bs[i])+',')
+	out3.write(str(Bs[i])+',')
+	out1.write(str(As[i])+',')
+	out2.write(str(As[i])+',')
+	out3.write(str(As[i])+',')
 	for a in As:
 		out1.write(str(total[(a,b)])+',')
 		out2.write(str(special[(a,b)])+',')
@@ -67,4 +63,4 @@ for b in Bs:
 out1.close()
 out2.close()
 out3.close()
-raw_input()
+#raw_input()
