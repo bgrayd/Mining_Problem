@@ -229,6 +229,9 @@ int run(bool(*answers)[length][width], int numSpecial) {
 		for (int j = 0; j < width; j++)
 			visitedNodes[i][j] = false;
 
+	int currentX = length + length / 2;
+	int currentY = width / 2;
+
 	while (1) {
 		// Init the queue
 		std::priority_queue<locationNode, std::vector<locationNode>, std::less<locationNode>> prioQueue;
@@ -236,7 +239,7 @@ int run(bool(*answers)[length][width], int numSpecial) {
 		// Calculate gas costs
 		for (int i = 0; i < length; i++) {
 			for (int j = 0; j < width; j++) {
-				locationNode ln = locationNode(i, j, pOfT[i][j]);
+				locationNode ln = locationNode(i, j, pOfT[i][j], currentX, currentY);
 				if (currentGas > ln.getCost() && !visitedNodes[i][j]) {
 					prioQueue.push(ln);
 				}
@@ -258,6 +261,9 @@ int run(bool(*answers)[length][width], int numSpecial) {
 		else {
 			currentReward = currentReward + baseReward;
 		}
+
+		currentX = chosenOption.position.x;
+		currentY = chosenOption.position.y;
 
 		//Update probibilities
 		updatePOfT(&pOfT, chosenOption.position, (*answers)[chosenOption.position.x][chosenOption.position.y], currentNumSpecial);

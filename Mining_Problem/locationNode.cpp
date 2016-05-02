@@ -16,6 +16,15 @@ locationNode::locationNode(int x, int y, double prob)
 	this->basePosition.y = width / 2;
 }
 
+locationNode::locationNode(int x, int y, double prob, int startPosx, int startPosy)
+{
+	this->position.x = x;
+	this->position.y = y;
+	this->prob = prob;
+	this->basePosition.x = startPosx;
+	this->basePosition.y = startPosy;
+}
+
 
 locationNode::~locationNode()
 {
