@@ -5,7 +5,7 @@
 #define length 8
 #define width 8
 //#define startingGas 500
-#define startingGas 300
+#define startingGas 100
 #define baseReward 1000
 #define addedReward 1
 
@@ -23,12 +23,6 @@ struct Position
 {
 	int x;
 	int y;
-	
-	bool operator==(const Position& a) const
-	{
-		return (x == a.x && y == a.y);
-	}
-
 };
 
 int manhDist(Position pos1, Position pos2);
