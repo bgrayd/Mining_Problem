@@ -60,7 +60,7 @@ public:
 		return (this->getCost())*(this->basicHeurCostScale) + (this->prob) * (this->basicHeurProbScale);
 	}
 	double locationNode::getAdvancedHeuristicValue() const
-	/*{
+	{
 		double runningValue = this->getBasicHeuristicValue();
 		int LutPos = this->position.x + (this->position.y*width);
 
@@ -69,8 +69,8 @@ public:
 		runningValue = runningValue + (advHeur3lvlScale*LUT3lvl[LutPos]);
 
 		return runningValue;
-	}*/
-	{
+	}
+	/*{
 		double runningValue = (this->prob) * (basicHeurProbScale);
 		int LutPos = this->position.x + (this->position.y*width);
 
@@ -81,7 +81,7 @@ public:
 		runningValue = runningValue / ((this->getCost())*(basicHeurCostScale));
 
 		return runningValue;
-	}
+	}*/
 
 	void setBasicHeuristic(double costScaler, double probScaler);
 	bool operator<(locationNode & rhs);

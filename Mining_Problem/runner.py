@@ -19,8 +19,8 @@ def parseOut(output):
 		special += int(value%1000)
 	return runs, special
 
-As = [-1, -0.5, -0.001,0.01, 0.1, 1]#[each/10.0 for each in range(-10,1)]
-Bs = [10, -2, -1, 0, 50, 100, 1000]#[each*10 for each in range(0,11)]
+As = [each/10.0 for each in range(-15,25)]#[-1, -0.5, -0.001, 0.01, 0.1, 1]
+Bs = [each*10 for each in range(-10,5)]#[-2, -1, 0, 10, 50, 100, 1000]
 
 #As.append(0.5)
 #As.append(1)
