@@ -23,6 +23,10 @@ struct Position
 {
 	int x;
 	int y;
+	bool operator==(const Position& a) const
+	{
+		return (x == a.x && y == a.y);
+	}
 };
 
 int manhDist(Position pos1, Position pos2);
