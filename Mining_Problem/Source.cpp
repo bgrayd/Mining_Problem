@@ -148,12 +148,19 @@ void calcPOfDGivenT(double(*pOfDGivenT)[length][width], Position posChecked, boo
 		myQueue.push(nextPos);
 	}
 
-
+	std::vector<Position> visited;
+	visited.push_back(currentPos);
 	while (!myQueue.empty())
 	{
 		currentPos = myQueue.front();
 		myQueue.pop();
 		adjProb = probAdjYgivenY * (*pOfDGivenT)[currentPos.x][currentPos.y];
+
+		if (std::find(visited.begin(), visited.end(), currentPos) != visited.end()) {
+			continue;
+		}
+
+		visited.push_back(currentPos);
 
 		nextPos.x = currentPos.x - 1;
 		nextPos.y = currentPos.y;

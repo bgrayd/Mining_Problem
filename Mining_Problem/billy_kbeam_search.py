@@ -3,7 +3,7 @@ from Queue import PriorityQueue
 
 
 k = 6
-iterationsPerType = 100
+iterationsPerType = 10
 MaxAmountToChange = 0.5
 zeroMaxAmount = 10
 ThreadsToRunAtOnce = 3
@@ -74,7 +74,7 @@ class searchThread():
                 p=subprocess.Popen(["..\Release\Mining_Problem.exe",str(currentWeight.a),str(currentWeight.b),str(currentWeight.c),str(currentWeight.d),str(currentWeight.e)], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
                 r,s = parseOut(p.stdout.readline())
                 
-                valueBeingMaxed = r + 10 * s
+                valueBeingMaxed = r + 1000 * s
                 
                 thisWeight = copy.deepcopy(currentWeight)
                 thisWeight.r = r

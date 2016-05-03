@@ -19,17 +19,17 @@ def parseOut(output):
 		special += int(value%1000)
 	return runs, special
 
-As = [each/10.0 for each in range(-10,20)]#[-1, -0.5, -0.001,0.01, 0.1, 1]#
-Bs = [each*10.0 for each in range(-10,5)]#[-2, -1, 0, 10, 50, 100, 1000]#
+As = [each/10.0 for each in range(-10,10)]#[-1, -0.5, -0.001,0.01, 0.1, 1]#
+Bs = [each*10.0 for each in range(-10,10)]#[-2, -1, 0, 10, 50, 100, 1000]#
 
 #As.append(0.5)
 #As.append(1)
 #Bs.append(-1)
 #Bs.append(-0.5)
 
-out1 = open("total.csv","w")
-out2 = open("special.csv","w")
-out3 = open("special_avg.csv","w")
+out1 = open("total_200.csv","w")
+out2 = open("special_200.csv","w")
+out3 = open("special_avg_200.csv","w")
 out1.write(",")
 out2.write(",")
 out3.write(",")
@@ -45,7 +45,7 @@ total = {}
 
 for a in As:
 	for b in Bs:
-		p=subprocess.Popen(["..\Release\Mining_Problem.exe",str(a),str(b)], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+		p=subprocess.Popen(["..\Release\Mining_Problem_200.exe",str(a),str(b)], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 		r,s = parseOut(p.stdout.readline())
 		special[(a,b)] = s
 		total[(a,b)] = r
